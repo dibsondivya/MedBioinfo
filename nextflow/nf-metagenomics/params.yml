@@ -1,0 +1,6 @@
+project: "naiss2024-22-540"
+outdir: "/proj/applied_bioinformatics/users/x_vaish/MedBioinfo/nextflow/nf-metagenomics/output_metagenomics"
+input_read_pairs: "/proj/applied_bioinformatics/users/x_vaish/MedBioinfo/data/sra_fastq/*{1,2}.fastq.gz"
+#input_read_pairs: "/proj/applied_bioinformatics/users/x_vaish/MedBioinfo/data/sra_fastq/ERR6913124*{1,2}.fastq.gz"
+bowtie2_db: "/proj/applied_bioinformatics/users/x_vaish/MedBioinfo/data/bowtie2_DBs/PhiX_bowtie2_DB*"
+kraken2_db: "/proj/applied_bioinformatics/common_data/kraken_database/"
