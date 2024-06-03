@@ -8,7 +8,7 @@
 #SBATCH -o /home/x_vaish/../../proj/applied_bioinformatics/users/x_vaish/MedBioinfo/blast_output/slurm.%A.%a.out   # standard output (STDOUT) redirected to these files (with Job ID and array ID in file names)
 #SBATCH -e /home/x_vaish/../../proj/applied_bioinformatics/users/x_vaish/MedBioinfo/blast_output/slurm.%A.%a.err   # standard error  (STDERR) redirected to these files (with Job ID and array ID in file names)
 # /!\ Note that the ./outputs/ dir above needs to exist in the dir where script is submitted **prior** to submitting this script
-#SBATCH --array=1-1                # 1-N: clone this script in an array of N tasks: $SLURM_ARRAY_TASK_ID will take the value of 1,2,...,N
+#SBATCH --array=1-8               # 1-N: clone this script in an array of N tasks: $SLURM_ARRAY_TASK_ID will take the value of 1,2,...,N
 #SBATCH --job-name=MedBioinfo        # name of the task as displayed in squeue & sacc, also encouraged as srun optional parameter
 #SBATCH --mail-type END              # when to send an email notiification (END = when the whole sbatch array is finished)
 #SBATCH --mail-user divya.shridar@it.uu.se
@@ -50,8 +50,7 @@ fa_file="${workdir}/MedBioinfo/blast_output/MedBioinfo.${SLURM_ARRAY_TASK_ID}.${
 ## create fasta
 #srun --job-name=${accnum} --account=naiss2024-22-540 singularity exec meta.sif seqkit head ${input_file} > ${fq_file}
 #srun --job-name=${accnum} --account=naiss2024-22-540 singularity exec meta.sif seqkit fq2fa ${fq_file} -o ${fa_file}
-srun --job-name=seqing --account=naiss2024-22-540 singularity exec meta.sif seqkit fq2fa ${input_file} -o ${fa_file}
-
+srun --job-name=${accnum} --account=naiss2024-22-540 singularity exec meta.sif seqkit fq2fa ${input_file} -o ${fa_file}
 ## run blastn
 srun --job-name=${accnum} --account=naiss2024-22-540 blastn -db /home/x_vaish/../../proj/applied_bioinformatics/users/x_vaish/MedBioinfo/data/blast_db/refseq_viral_genomic -num_threads ${SLURM_CPUS_PER_TASK} -query ${fa_file} -out ${output_file} -evalue 1000 -perc_identity 1 -outfmt 6 -max_hsps 5
 
